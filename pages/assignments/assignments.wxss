@@ -1,0 +1,77 @@
+/* pages/assignments/assignments.wxss */
+@import "../../components/weui/dist/style/weui.wxss";
+
+/* .weui-cell{
+    border-bottom: 2rpx solid grey;
+} */
+/* .weui_textarea{
+    border-top: none;
+    margin-top: 0;
+} */
+
+.container{
+    width: 100vw;
+    height: 100vh;
+}
+
+.weui-textarea{
+    position: relative;
+    margin: 30rpx 5vw;
+    top: 0;
+    width: 90vw;
+    height: 250rpx;
+    display: block;
+    /* background-color: red; */
+}
+
+
+
+.container .uploader_picture_container{
+    padding: 0;
+    width: 90vw;
+    margin: auto;
+    /* background-color: red; */
+    display: block;
+}
+
+.container .uploader_picture_container .uploader_picture{
+    float: left;
+    box-sizing: border-box;
+    position: relative;
+    margin: 1vw;
+    width: 28vw;
+    height: 28vw;
+    bottom: 50rpx;
+    display: inline-block;
+}
+
+.container .submit_button{
+    width: 90vw;
+    margin: auto;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    background-color: #529eea;
+}
+
+.rightDrawer{
+    z-index: 10;
+    background-color: white;
+    width: 50vw;
+    height: 100vh;
+}
+
+.classTitle{
+    font-size: 4vw;
+    margin: 2vw 4vw;
+}
+
+.classList{
+    width: 96vw;
+    margin: 0 2vw;
+    display: block;
+}
+
+.classItem{
+    font-size: 4.7vw;
+    display: inline;
+}

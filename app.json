@@ -1,0 +1,26 @@
+{
+  "cloud": true,
+  "pages": [
+    "pages/index/index",
+    "pages/myInfo/chat/chatWindow",
+    "pages/index/workDetail",
+    "pages/index/noticeDetail",
+    "pages/assignments/assignments",
+    "pages/assignments/messages",
+    "pages/assignments/notices",
+    "pages/myInfo/myInfo",
+    "pages/myInfo/myName",
+    "pages/myInfo/chat/chatList",
+    "pages/myInfo/manageClass",
+    "pages/myInfo/createClass",
+    "pages/myInfo/joinClass",
+    "pages/myInfo/aboutUs"
+  ],
+  "window": {
+    "backgroundColor": "#303030",
+    "navigationBarBackgroundColor": "#303030",
+    "navigationBarTextStyle": "white",
+    "backgroundTextStyle": "light",
+    "navigationBarTitleText": "微校"
+  }
+}

@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "",
+    "usingComponents": {
+        "i-rate": "../../components/iview/dist/rate/index"
+    }
+}

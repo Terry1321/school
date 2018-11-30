@@ -1,0 +1,25 @@
+<!--pages/assignments/notices.wxml-->
+<i-drawer mode="right" visible="{{showRight1}}" bind:close="toggleRight1">
+    <view class="rightDrawer">
+        <i-checkbox-group current="{{classCurrent}}" bindchange="handleClassChange">
+            <i-checkbox wx:for="{{classList}}" position="right" wx:key="{{item.id}}" value="{{item.name}}"></i-checkbox>
+        </i-checkbox-group>
+    </view>
+</i-drawer>
+<i-toast id="pop_toast" type="ghost" bind:click="handleSuccess">成功</i-toast>
+<i-message id="pop_message" type="ghost" bind:click="handleError">错误提醒</i-message>
+<form class="container" bindsubmit="formSubmit" bindreset="formReset">
+    <textarea class="weui-textarea" name="content" placeholder="请输入通知内容" maxlength="-1" disabled="{{disableInput}}"></textarea>
+    <i-panel title="选择通知类型">
+        <i-radio-group current="{{subjectCurrent}}" bindchange="handleSubjectChange">
+            <i-radio wx:for="{{subjectList}}" position="right" wx:key="{{item.id}}" value="{{item.name}}"></i-radio>
+        </i-radio-group>
+    </i-panel>
+    <block wx:if="{{classCurrent.length}}">
+        <text class="classTitle" selectable="false" space="false" decode="false">已选{{classCurrent.length}}个班\n</text>
+        <text class="classList" selectable="false" space="false" decode="true">
+            <block wx:for="{{classCurrent}}">{{item}},&ensp;&ensp;</block>
+        </text>
+    </block>
+    <button class="submit_button" form-type="submit">发送</button>
+</form>

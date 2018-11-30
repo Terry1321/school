@@ -1,0 +1,47 @@
+/* pages/assignments/notices.wxss */
+
+.container{
+    width: 100vw;
+    height: 100vh;
+}
+
+.weui-textarea{
+    position: relative;
+    margin: 30rpx 5vw;
+    top: 0;
+    width: 90vw;
+    height: 250rpx;
+    display: block;
+    /* background-color: red; */
+}
+
+.container .submit_button{
+    width: 90vw;
+    margin: auto;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    background-color: #529eea;
+}
+
+.rightDrawer{
+    z-index: 10;
+    background-color: white;
+    width: 50vw;
+    height: 100vh;
+}
+
+.classTitle{
+    font-size: 4vw;
+    margin: 2vw 4vw;
+}
+
+.classList{
+    width: 96vw;
+    margin: 0 2vw;
+    display: block;
+}
+
+.classItem{
+    font-size: 4.7vw;
+    display: inline;
+}
