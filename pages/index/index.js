@@ -324,7 +324,21 @@ Page({
     })
   },
 
-
+  // 轮询函数    
+  timer(){
+    var that = this;
+    setTimeout(function(){
+        that.setData({
+          username:app.globalData.username,
+          //index summary
+          workSummaryList: app.globalData.workSummaryList.reverse(),
+          messageSummaryList: (app.globalData.messageSummaryList.reverse()),
+          noticeSummaryList: app.globalData.noticeSummaryList.reverse(),
+          classItemList: app.globalData.chatClassList,
+        })
+        that.timer();
+    },3000);
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -334,16 +348,8 @@ Page({
       imageWidth: wx.getSystemInfoSync().windowWidth
     })
     that.initAnimation();
-    setTimeout(function(){
-      that.setData({
-        username:app.globalData.username,
-        //index summary
-        workSummaryList: app.globalData.workSummaryList.reverse(),
-        messageSummaryList: app.globalData.messageSummaryList.reverse(),
-        noticeSummaryList: app.globalData.noticeSummaryList.reverse(),
-        classItemList: app.globalData.chatClassList,
-      })
-    },3000);
+    // 使用函数
+    that.timer();
 
   },
 

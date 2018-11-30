@@ -78,6 +78,7 @@ Page({
         that.setData({
           studentList: res.data,
         })
+        
         // var studentList=that.data.studentList
         // let studentListActive = []
         // for (var i = 0; i < studentList.length; i++){

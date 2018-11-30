@@ -240,16 +240,18 @@ App({
       }
     })
 
-    // // 留言板
-    wx.request({
-      url: that.globalData.httpsUrl + '/message/show',
-      method: 'POST',
-      header: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: {},
-      success: function (res) {
-        that.globalData.messageSummaryList = res.data
-      }
-    })
+    // 留言板
+    function message(){
+      wx.request({
+        url: that.globalData.httpsUrl + '/message/show',
+        method: 'POST',
+        header: { 'content-type': 'application/x-www-form-urlencoded' },
+        data: {},
+        success: function (res) {
+          that.globalData.messageSummaryList = res.data
+        }
+      })
+    }
     //作业
     function work() {
       var userId = that.globalData.userId;
@@ -303,6 +305,8 @@ App({
       work();
       group();
       chatParentList(); 
+      message();
+      timer();
        // 由于  wx.request 是网络请求，可能会在 Page.onLoad 之后才返回
         // 所以此处加入 callback 以防止这种情况
          if (that.dataReadyCallback) {
@@ -312,13 +316,26 @@ App({
      that.userInfoReadyCallback = res => {
         work();
         group();
+        message();
         chatParentList(); 
+        timer();
         // 由于  wx.request 是网络请求，可能会在 Page.onLoad 之后才返回
          // 所以此处加入 callback 以防止这种情况
           if (that.dataReadyCallback) {
              that.dataReadyCallback(res)
           }
       }
+    }
+    // 轮询
+    function timer(){
+      setTimeout(function(){
+          work();
+          group();
+          message();
+          chatParentList(); 
+          // 调用自己
+          timer();
+      },3000)
     }
 
     
