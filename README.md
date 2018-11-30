@@ -1,2 +1,1 @@
-# weixiao_test
 # school
