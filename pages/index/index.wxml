@@ -5,9 +5,9 @@
   <!-- 头部 -->
   <view class="header">
     <view class="option">
-      <view class="o1 {{_this==0?'inthis':''}}" data-num="0" bindtap="changepages">作业</view>
-      <view class="o2 {{_this==1?'inthis':''}}" data-num="1" bindtap="changepages">留言</view>
-      <view class="o3 {{_this==2?'inthis':''}}" data-num="2" bindtap="changepages">通知</view>
+      <view class="o1 {{_this==0?'inthis':''}}" data-num="0" bindtap="changepages">作业<view class="redPoint" hidden="{{title_1 == true? '':'1'}}"/></view>
+      <view class="o2 {{_this==1?'inthis':''}}" data-num="1" bindtap="changepages">留言<view class="redPoint" hidden="{{title_2 == true? '':'1'}}"/></view>
+      <view class="o3 {{_this==2?'inthis':''}}" data-num="2" bindtap="changepages">通知<view class="redPoint" hidden="{{title_3 == true? '':'1'}}"/></view>
     </view>
   </view>
   <!-- 作业 -->
@@ -67,13 +67,13 @@
       <view class="tcontent notice" hidden="">
         <scroll-view class="nre_tipwindow notice_tipwindow" scroll-y="true" scroll-with-animation="" enable-back-to-top="true">
           <block wx:for="{{noticeSummaryList}}" wx:key="" wx:for-item="noticeSummary">
-            <!-- notice content -->
-            <view class="nre_tips" data-num="{{noticeSummary.noticeId}}" bindtap="toNoticeDetail">
-              <view class="nre_tips_logo {{noticeSummary.noticeType == '通知' ? 'notice' : noticeSummary.noticeType == '任务' ? 'task' : ''}}" data-num="{{noticeSummary.noticeId}}"></view>
-              <view class="nre_tips_info" data-num="{{noticeSummary.noticeId}}">
-                <view class="nre_tips_name" data-num="{{noticeSummary.noticeId}}">{{noticeSummary.noticeClass}}</view>
-                <view class="nre_tips_time" data-num="{{noticeSummary.noticeId}}">{{noticeSummary.noticeContents[0].time}}</view>
-                <view class="nre_tips_summary" data-num="{{noticeSummary.noticeId}}">{{noticeSummary.noticeContents[0].noticeContent}}</view>
+            <!-- notice content --> 
+            <view class="nre_tips" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}" bindtap="toNoticeDetail">
+              <view class="nre_tips_logo notice" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}"></view>
+              <view class="nre_tips_info" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}">
+                <view class="nre_tips_name" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}">{{noticeSummary[0].noticeClass}}</view>
+                <view class="nre_tips_time" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}">{{noticeSummary[0].time}}</view>
+                <view class="nre_tips_summary" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}">{{noticeSummary[0].text}}</view>
               </view>
             </view>
           </block>
@@ -85,7 +85,7 @@
 <!-- 我的 -->
 <view class="myInfo" hidden="{{current == 'homepage'? '1':''}}">
   <i-modal visible="{{ visible }}" bind:ok="handleOk" bind:cancel="handleClose">
-    <view>确定{{isTeacher == true?'解散':'退出'}}“{{classItemList[popNum].classItemName}}”吗？</view>
+    <view>确定{{isTeacher == true?'解散':'退出'}}吗？</view>
   </i-modal>
   <view class="info" bindtap="toModifyMyInfo">
     <view class="head">
@@ -105,7 +105,7 @@
     </view>
   </i-collapse-item>
   <block wx:if="{{isTeacher==true}}">
-    <view class="infoItem" bindtap="to_createClass">管理班级</view>
+    <view class="infoItem" bindtap="to_createClass">管理班级<view class="redPoint" hidden="{{join_class == true? '':'1'}}"/></view>
   </block>
   <block wx:else>
     <view class="infoItem" bindtap="to_joinClass">加入班级</view>
@@ -121,6 +121,7 @@
     <image animation="{{animationData0}}" class="f_plane_icon" src="../../images/myapp/m-home{{_plane_miss}}.png" />
   </view>
   <i-tab-bar-item key="mine" icon="mine" current-icon="mine_fill" title="我的"></i-tab-bar-item>
+  <view class="redPoint" hidden="{{join_class == true? '':'1'}}"/>
   <view animation="{{animationData1}}" class="ball" bindtap="to_assignments">作业</view>
   <view animation="{{animationData2}}" class="ball" bindtap="to_messages">留言</view>
   <view animation="{{animationData3}}" class="ball" bindtap="to_notices">通知</view>

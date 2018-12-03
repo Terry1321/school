@@ -50,62 +50,63 @@ App({
     //   'time': '00:01',
     //   'comment': []
     // }],
-    noticeSummaryList: [{
-      'noticeId': 1,
-      'noticeClass': '三年级二班',
-      'noticeType': '任务',
-      'noticeContents': [{
-        'noticeContent': '三年级二班发布新作业',
-        'time': '09-01 00:00'
-      }, {
-        'noticeContent': '三年级二班发布新作业',
-        'time': '09-02 00:00'
-      }, {
-        'noticeContent': '三年级二班发布新作业',
-        'time': '09-03 00:00'
-      }, {
-        'noticeContent': '三年级二班发布新作业',
-        'time': '09-04 00:00'
-      }, {
-        'noticeContent': '三年级二班发布新作业',
-        'time': '09-05 00:00'
-      }, {
-        'noticeContent': '三年级二班发布新作业',
-        'time': '00:00S'
-      }]
-    }, {
-      'noticeId': 2,
-      'noticeClass': '三年级三班',
-      'noticeType': '任务',
-      'noticeContents': [{
-        'noticeContent': '三年级三班发布新作业',
-        'time': '00:01'
-      }]
-    }, {
-      'noticeId': 3,
-      'noticeClass': '三年级四班',
-      'noticeType': '任务',
-      'noticeContents': [{
-        'noticeContent': '三年级四班发布新作业',
-        'time': '00:01'
-      }]
-    }, {
-      'noticeId': 4,
-      'noticeClass': '三年级二班',
-      'noticeType': '通知',
-      'noticeContents': [{
-        'noticeContent': '放假通知,十月份国庆放假7天，10月1日到10月7日，10月8日8点准时回校报到。',
-        'time': '00:05'
-      }]
-    }, {
-      'noticeId': 5,
-      'noticeClass': '三年级三班',
-      'noticeType': '通知',
-      'noticeContents': [{
-        'noticeContent': '放假通知',
-        'time': '00:05'
-      }]
-    }],
+    noticeSummaryList: [],
+    // noticeSummaryList: [{
+    //   'noticeId': 1,
+    //   'noticeClass': '三年级二班',
+    //   'noticeType': '任务',
+    //   'noticeContents': [{
+    //     'noticeContent': '三年级二班发布新作业',
+    //     'time': '09-01 00:00'
+    //   }, {
+    //     'noticeContent': '三年级二班发布新作业',
+    //     'time': '09-02 00:00'
+    //   }, {
+    //     'noticeContent': '三年级二班发布新作业',
+    //     'time': '09-03 00:00'
+    //   }, {
+    //     'noticeContent': '三年级二班发布新作业',
+    //     'time': '09-04 00:00'
+    //   }, {
+    //     'noticeContent': '三年级二班发布新作业',
+    //     'time': '09-05 00:00'
+    //   }, {
+    //     'noticeContent': '三年级二班发布新作业',
+    //     'time': '00:00S'
+    //   }]
+    // }, {
+    //   'noticeId': 2,
+    //   'noticeClass': '三年级三班',
+    //   'noticeType': '任务',
+    //   'noticeContents': [{
+    //     'noticeContent': '三年级三班发布新作业',
+    //     'time': '00:01'
+    //   }]
+    // }, {
+    //   'noticeId': 3,
+    //   'noticeClass': '三年级四班',
+    //   'noticeType': '任务',
+    //   'noticeContents': [{
+    //     'noticeContent': '三年级四班发布新作业',
+    //     'time': '00:01'
+    //   }]
+    // }, {
+    //   'noticeId': 4,
+    //   'noticeClass': '三年级二班',
+    //   'noticeType': '通知',
+    //   'noticeContents': [{
+    //     'noticeContent': '放假通知,十月份国庆放假7天，10月1日到10月7日，10月8日8点准时回校报到。',
+    //     'time': '00:05'
+    //   }]
+    // }, {
+    //   'noticeId': 5,
+    //   'noticeClass': '三年级三班',
+    //   'noticeType': '通知',
+    //   'noticeContents': [{
+    //     'noticeContent': '放假通知',
+    //     'time': '00:05'
+    //   }]
+    // }],
     //Chat
     chatClassList: [],
     // chatClassList: [{
@@ -219,7 +220,6 @@ App({
                             }else{
                               that.globalData.isTeacher = false;
                             }
-                            
                             // 把添加成功后的用户名称加入全局变量
                             that.globalData.username = res.data.name;
                             // 由于  wx.request 是网络请求，可能会在 Page.onLoad 之后才返回
@@ -249,6 +249,23 @@ App({
         data: {},
         success: function (res) {
           that.globalData.messageSummaryList = res.data
+        }
+      })
+    } 
+
+    // 通知
+    function notices(){
+      var userId = that.globalData.userId;
+      wx.request({
+        url: that.globalData.httpsUrl + '/notice/show',
+        method: 'POST',
+        header: { 'content-type': 'application/x-www-form-urlencoded' },
+        data: {
+          user_id:userId,
+        },
+        success: function (res) {
+          // console.log(res.data[0][0]);
+          that.globalData.noticeSummaryList = res.data
         }
       })
     }
@@ -306,7 +323,9 @@ App({
       group();
       chatParentList(); 
       message();
+       notices();
       timer();
+
        // 由于  wx.request 是网络请求，可能会在 Page.onLoad 之后才返回
         // 所以此处加入 callback 以防止这种情况
          if (that.dataReadyCallback) {
@@ -314,10 +333,12 @@ App({
          }
     }else{
      that.userInfoReadyCallback = res => {
+      
         work();
         group();
         message();
         chatParentList(); 
+        notices();
         timer();
         // 由于  wx.request 是网络请求，可能会在 Page.onLoad 之后才返回
          // 所以此处加入 callback 以防止这种情况
@@ -332,7 +353,8 @@ App({
           work();
           group();
           message();
-          chatParentList(); 
+          notices();
+          chatParentList();
           // 调用自己
           timer();
       },3000)

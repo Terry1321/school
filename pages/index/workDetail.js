@@ -16,7 +16,7 @@ Page({
     // onScreen: true,
     studentList: [],
     studentListActive: [],
-    workId:'',
+    // workId:'',
   },
 
   queryPictures(num) {
@@ -110,6 +110,28 @@ Page({
     })
   },
 
+  submitRate(){
+    let that = this
+    var star =that.data.starIndex;
+    var userId = app.globalData.userId;
+    var workId = that.data.workId
+    wx.request({
+        url: app.globalData.httpsUrl + '/submited',
+        method: 'POST',
+        header: { 'content-type': 'application/x-www-form-urlencoded' },
+      data: {
+        'assignments_id':workId,
+        'user_id':userId,
+        'star':star
+      },
+      success: function (res) {
+        that.setData({
+          starIndex: res.data
+        })
+      }
+    })
+
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -120,6 +142,7 @@ Page({
       isTeacher: app.globalData.isTeacher,
     })
     var num = JSON.parse(options.current)
+    console.log(num)
     that.data.workSummaryList = app.globalData.workSummaryList
     //get workId
     //get workSummaryList[workId]
@@ -129,6 +152,7 @@ Page({
       if (workSummaryList[i].workId == num)
         break
     that.setData({
+      workId : num,
       workSummary: workSummaryList[i]
     })
     that.queryPictures(num)

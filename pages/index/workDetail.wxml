@@ -22,7 +22,7 @@
                 <i-rate size="40" bind:change="onChange" value="{{starIndex}}"></i-rate>
             </i-cell>
         </view>
-        <block wx:if="{{workSummary['submited']}}">
+        <block wx:if="{{workSummary['submited'] == 'false'}}">
             <button class="submit_button" form-type="submit">提交评价</button>
         </block>
         <block wx:else>
@@ -40,11 +40,6 @@
         </view>
         <view class="studentList" style="height:400rpx;">
             <view class="studentNavigation">
-                <view class="submitted">
-                    <text>已交</text>
-                    <text class="count">10</text>
-                    <text>/50</text>
-                </view>
                 <view class="selectSubmitted {{onScreen == true?'selected':''}}" bindtap="screenStudents">
                     已提交
                 </view>

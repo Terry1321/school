@@ -1,10 +1,10 @@
 <!--pages/index/noticeDetail.wxml-->
 <scroll-view class="noticeDetail" scroll-y scroll-with-animation="" enable-back-to-top="" scroll-top="{{scrollTop}}">
-<block wx:for="{{noticeSummary.noticeContents}}" wx:key="" wx:for-item="noticeList">
+<block wx:for="{{noticeSummaryList}}" wx:key="" wx:for-item="noticeList">
     <view class="item" hover-class="none" hover-stop-propagation="false">
         <view class="time" hover-class="none" hover-stop-propagation="false">{{noticeList.time}}</view>
         <view class="content" hover-class="none" hover-stop-propagation="false">
-            <text>{{noticeList.noticeContent}}</text>
+            <text>{{noticeList.text}}</text>
         </view>
     </view>
 </block>

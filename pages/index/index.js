@@ -39,6 +39,11 @@ Page({
     animationData1: {},
     animationData2: {},
     animationData3: {},
+    //red point
+    title_1: true,
+    title_2: false,
+    title_3: true,
+    join_class: true,
   },
 
 // 获取授权
@@ -52,13 +57,22 @@ Page({
   //home页面切换
   listenSwiper(e) {
     var that = this
+    let num = e.detail.current
+    if (num == 0) that.setData({ title_1: false })
+    else if (num == 1) that.setData({ title_2: false })
+    else if (num == 2) that.setData({ title_3: false })
     that.setData({
       _this: e.detail.current
     })
   },
 
   changepages: function (e) {
-    this.setData({
+    let that = this
+    let num = e.target.dataset.num
+    if (num == 0) that.setData({ title_1: false })
+    else if (num == 1) that.setData({ title_2: false })
+    else if (num == 2) that.setData({ title_3: false })
+    that.setData({
       _this: e.target.dataset.num,
       swiperCurrent: e.target.dataset.num
     })
@@ -150,6 +164,27 @@ Page({
   },
 
   handleOk() {
+    var groupId = this.data.popNum;
+    var userId=app.globalData.userId;
+   if(app.globalData.isTeacher==true){
+     var statu=1;
+   }else{
+     var statu = 0;
+   }
+    wx.request({
+      url: app.globalData.httpsUrl + '/quit',
+      method: 'POST',
+      header: { 'content-type': 'application/x-www-form-urlencoded' },
+      data: {
+        'user_id':userId,
+        'group_id':groupId,
+        'statu':statu
+        },
+      success: function (res) {
+        console.log(res.data);
+      }
+    })
+ 
     this.deleteClassItem(this.data.popNum)
   },
 
@@ -217,8 +252,13 @@ Page({
   },
 
   toNoticeDetail(e) {
+    let that = this
+    let data = {
+      num: e.target.dataset.num,
+      name: e.target.dataset.name,
+    }
     wx.navigateTo({
-      url: "noticeDetail?current=" + JSON.stringify(e.target.dataset.num)
+      url: "noticeDetail?current=" + JSON.stringify(data)
     });
   },
 
@@ -230,6 +270,10 @@ Page({
 
   //MyInfor
   to_createClass: function (e) {
+    let that = this
+    that.setData({
+      join_class: false
+    })
     wx.navigateTo({
       url: "../myInfo/manageClass"
     });
@@ -332,7 +376,7 @@ Page({
           username:app.globalData.username,
           //index summary
           workSummaryList: app.globalData.workSummaryList.reverse(),
-          messageSummaryList: (app.globalData.messageSummaryList.reverse()),
+          messageSummaryList: app.globalData.messageSummaryList.reverse(),
           noticeSummaryList: app.globalData.noticeSummaryList.reverse(),
           classItemList: app.globalData.chatClassList,
         })

@@ -7,33 +7,43 @@ Page({
    */
   data: {
     scrollTop: 0,
-    noticeSummaryList: app.globalData.noticeSummaryList,
-    noticeSummary: {},
+    noticeSummaryList: [],
   },
-
-
-
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let self = this
+    let that = this
+
     //get noticeId
-    let num = JSON.parse(options.current)
-    //get noticeSummaryList[noticeId]
-    var noticeSummaryList = this.data.noticeSummaryList
-    let i = 0
-    for (; i < noticeSummaryList.length; i++)
-      if (noticeSummaryList[i].noticeId == num)
-        break;
+    let data = JSON.parse(options.current)
+    let num = data.num
+    let name = data.name
+    var userId=app.globalData.userId;
+    // 访问api获取数据
+    wx.request({
+      url: app.globalData.httpsUrl + '/notice/detail',
+      method: 'POST',
+      header: { 'content-type': 'application/x-www-form-urlencoded' },
+      data: {
+        'user_id':userId,
+        'group_id':num
+      },
+      success: function (res) {
+        // console.log(res.data);
+        that.setData({
+          noticeSummaryList:res.data
+        })
+      }
+    })
     //set title
-    self.setData({
-      noticeSummary: noticeSummaryList[i],
+    that.setData({
+      // noticeSummary: noticeSummaryList[i][0],
       scrollTop: 1000000000,
     })
     wx.setNavigationBarTitle({
-      title: self.data.noticeSummary.noticeClass
+      title: name
     })
   },
 

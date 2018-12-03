@@ -45,10 +45,7 @@ Page({
             delta: 2
           })
           //返回上一页
-          wx.showToast({
-            title: '修改成功,下次登陆时生效',
-            icon: 'success',
-          })
+         
         } else {
            wx.navigateBack({
             delta: 1

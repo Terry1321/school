@@ -18,10 +18,11 @@ swiper{
   display: block;
 }
 
-.home .header .option view{
+.home .header .option .o1, .home .header .option .o2, .home .header .option .o3{
   /* padding: 0 30rpx; */
   display: inline-block;
   /* width: 90rpx; */
+  height: 74rpx;
   width: 12vw;
   padding: 0 4vw;
   /* color: #bfbfbf; */
@@ -30,6 +31,17 @@ swiper{
   font-weight: bold;
   line-height: 75rpx;
   text-align: center;
+}
+
+.home .header .option .redPoint{
+position: relative;
+float: left;
+top: -9vw;
+left: 10vw;
+width: 3vw;
+height: 3vw;
+background-color: red;
+border-radius: 100px;
 }
 
 .home .header .option .inthis{
@@ -436,11 +448,33 @@ swiper{
   color: #555;
 }
 
+.myInfo .infoItem .redPoint{
+  position: relative;
+  top: -8vw;
+  left: 17vw;
+  width: 3vw;
+  height: 3vw;
+  background-color: red;
+  border-radius: 100px;
+}
+
 .myInfoBorderBottom{
   border-bottom: 2rpx solid #f6f6f6;
 }
 
 /* 底部 */
+
+.footer .redPoint{
+  position: absolute;
+  float: right;
+  top: 2vw;
+  right: 11vw;
+  width: 3vw;
+  height: 3vw;
+  background-color: red;
+  border-radius: 100px;
+  z-index: 3;
+}
 
 .footer .f_plane{
   position: relative;
