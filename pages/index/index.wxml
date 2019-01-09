@@ -68,12 +68,12 @@
         <scroll-view class="nre_tipwindow notice_tipwindow" scroll-y="true" scroll-with-animation="" enable-back-to-top="true">
           <block wx:for="{{noticeSummaryList}}" wx:key="" wx:for-item="noticeSummary">
             <!-- notice content --> 
-            <view class="nre_tips" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}" bindtap="toNoticeDetail">
-              <view class="nre_tips_logo notice" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}"></view>
-              <view class="nre_tips_info" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}">
-                <view class="nre_tips_name" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}">{{noticeSummary[0].noticeClass}}</view>
-                <view class="nre_tips_time" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}">{{noticeSummary[0].time}}</view>
-                <view class="nre_tips_summary" data-num="{{noticeSummary[0].group_id}}" data-name="{{noticeSummary[0].noticeClass}}">{{noticeSummary[0].text}}</view>
+            <view class="nre_tips" data-num="{{noticeSummary.group_id}}" data-name="{{noticeSummary.noticeClass}}" bindtap="toNoticeDetail">
+              <view class="nre_tips_logo notice" data-num="{{noticeSummary.group_id}}" data-name="{{noticeSummary.noticeClass}}"></view>
+              <view class="nre_tips_info" data-num="{{noticeSummary.group_id}}" data-name="{{noticeSummary.noticeClass}}">
+                <view class="nre_tips_name" data-num="{{noticeSummary.group_id}}" data-name="{{noticeSummary.noticeClass}}">{{noticeSummary.noticeClass}}</view>
+                <view class="nre_tips_time" data-num="{{noticeSummary.group_id}}" data-name="{{noticeSummary.noticeClass}}">{{noticeSummary.time}}</view>
+                <view class="nre_tips_summary" data-num="{{noticeSummary.group_id}}" data-name="{{noticeSummary.noticeClass}}">{{noticeSummary.text}}</view>
               </view>
             </view>
           </block>
@@ -98,7 +98,7 @@
   <i-collapse-item class="classBanner" title="已加入班级" name="name1">
     <view slot="content" class="classBannerList">
       <block wx:for="{{classItemList}}" wx:key="#" wx:for-item="classItem">
-        <view class="classItem {{index == 0?'':'myInfoBorderTop'}}" data-num="{{classItem.classId}}" bindlongpress="handleOpen" bindtap="toChatList">
+        <view class="classItem {{index == 0?'':'myInfoBorderTop'}}" data-num="{{classItem.classId}}" data-name='{{classItem.className}}' bindlongpress="handleOpen" bindtap="toChatList">
           {{classItem.className}}
         </view>
       </block>
@@ -122,7 +122,11 @@
   </view>
   <i-tab-bar-item key="mine" icon="mine" current-icon="mine_fill" title="我的"></i-tab-bar-item>
   <view class="redPoint" hidden="{{join_class == true? '':'1'}}"/>
-  <view animation="{{animationData1}}" class="ball" bindtap="to_assignments">作业</view>
+  <block wx:if="{{isTeacher==true}}">
+    <view animation="{{animationData1}}" class="ball" bindtap="to_assignments">作业</view>
+  </block>
   <view animation="{{animationData2}}" class="ball" bindtap="to_messages">留言</view>
-  <view animation="{{animationData3}}" class="ball" bindtap="to_notices">通知</view>
+  <block wx:if="{{isTeacher==true}}">
+    <view animation="{{animationData3}}" class="ball" bindtap="to_notices">通知</view>
+  </block>
 </i-tab-bar>

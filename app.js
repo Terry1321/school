@@ -2,10 +2,16 @@
 App({
   globalData: {
     //global
-    httpsUrl: 'http://www.teacher.com',
+    // httpsUrl: 'http://www.teacher.com',
+    httpsUrl: 'https://www.xs.314reader.cn',
     username: 'null',
+    teacherLevel:'',
     // isTeacher: true,
     isTeacher: '',
+    title_1: false,
+    title_2: false,
+    title_3: false,
+    join_class: false,
     //index
     workSummaryList: [],
     // workSummaryList: [{
@@ -50,7 +56,9 @@ App({
     //   'time': '00:01',
     //   'comment': []
     // }],
-    noticeSummaryList: [],
+    noticeSummaryList: [
+      [{ count: 0 }]
+    ],
     // noticeSummaryList: [{
     //   'noticeId': 1,
     //   'noticeClass': '三年级二班',
@@ -108,7 +116,7 @@ App({
     //   }]
     // }],
     //Chat
-    chatClassList: [],
+    chatClassList: [{}],
     // chatClassList: [{
     //   'className': '三年级二班',
     //   //指向 chatParentList key
@@ -120,7 +128,7 @@ App({
     //   'className': '三年级四班',
     //   'classId': 3,
     // }],
-    chatParentList: {},
+    // chatParentList: {},
 
     // chatParentList: {
     //   1: {
@@ -146,29 +154,29 @@ App({
     //   }
     // },
 
-    chatParentPinyin: {
-      1: {
-        // 'parentName' : 'parentNamePinyin'
-        '黄一峰家长': 'Huangyifengjiazhang',
-        '欧阳强哥家长': 'Ouyangqianggejiazhang',
-        '家长3': 'Jiazhang3',
-        '家长4': 'Jiazhang4',
-        '家长5': 'Jiazhang5',
-        '家长6': 'Jiazhang6',
-        '家长7': 'Jiazhang7',
-        '家长8': 'Jiazhang8',
-        '家长9': 'Jiazhang9',
-        '家长10': 'Jiazhang10',
-        '家长11': 'Jiazhang11'
-      },
-      2: {
-        '何家长': 'Hejiazhang',
-        '周家长': 'Zhoujiazhang'
-      },
-      3: {
-        '文家长': 'Wenjiazhang'
-      }
-    }
+    // chatParentPinyin: {
+    //   1: {
+    //     // 'parentName' : 'parentNamePinyin'
+    //     '黄一峰家长': 'Huangyifengjiazhang',
+    //     '欧阳强哥家长': 'Ouyangqianggejiazhang',
+    //     '家长3': 'Jiazhang3',
+    //     '家长4': 'Jiazhang4',
+    //     '家长5': 'Jiazhang5',
+    //     '家长6': 'Jiazhang6',
+    //     '家长7': 'Jiazhang7',
+    //     '家长8': 'Jiazhang8',
+    //     '家长9': 'Jiazhang9',
+    //     '家长10': 'Jiazhang10',
+    //     '家长11': 'Jiazhang11'
+    //   },
+    //   2: {
+    //     '何家长': 'Hejiazhang',
+    //     '周家长': 'Zhoujiazhang'
+    //   },
+    //   3: {
+    //     '文家长': 'Wenjiazhang'
+    //   }
+    // }
   },
 
   onLaunch: function () {
@@ -183,7 +191,7 @@ App({
             success(e) {
               // 获取用户微信姓名
               lang: 'zh_CN',
-                that.globalData.name = e.userInfo.nickname;
+                that.globalData.name=e.userInfo.nickName;
               var name = that.globalData.name;
               wx.login({
                 // 获取用户的code发送给后台
@@ -214,6 +222,9 @@ App({
                           success: function (res) {
                             // 把添加成功后的userId加入全局变量
                             that.globalData.userId = res.data.user_id;
+                            // 把添加成功后的teacherLevel加入全局变量
+                            console.log(res.data);
+                            that.globalData.teacherLevel = res.data.teacherLevel;
                             // 把添加成功后的用户权限加入全局变量
                             if (res.data.isTeacher=='true'){
                               that.globalData.isTeacher = true;
@@ -248,6 +259,10 @@ App({
         header: { 'content-type': 'application/x-www-form-urlencoded' },
         data: {},
         success: function (res) {
+          // console.log(that.globalData.messageSummaryList.length == res.data.length)
+          if (that.globalData.messageSummaryList.length != res.data.length){
+            that.globalData.title_2 = true
+          }
           that.globalData.messageSummaryList = res.data
         }
       })
@@ -264,7 +279,11 @@ App({
           user_id:userId,
         },
         success: function (res) {
-          // console.log(res.data[0][0]);
+          // console.log(that.globalData.noticeSummaryList[0][0].count);
+          // console.log(res.data[0][0].count);
+          if (that.globalData.noticeSummaryList[0].count != res.data[0].count) {
+            that.globalData.title_3 = true
+          }
           that.globalData.noticeSummaryList = res.data
         }
       })
@@ -280,6 +299,9 @@ App({
           user_id: userId,
         },
         success: function (res) {
+          if (that.globalData.workSummaryList.length != res.data.length) {
+            that.globalData.title_1 = true
+          }
           that.globalData.workSummaryList = res.data
         }
       })
@@ -302,28 +324,29 @@ App({
     }
     
 
-    function chatParentList(){
-      var userId = that.globalData.userId;
-      wx.request({
-        url: that.globalData.httpsUrl + '/chatparentlist',
-        method: 'POST',
-        header: { 'content-type': 'application/x-www-form-urlencoded' },
-        data: {
-          'user_id': userId,
-        },
-        success: function (res) {
-          that.globalData.chatParentList = res.data
-        }
-      })
-    }
+    // function chatParentList(){
+    //   var userId = that.globalData.userId;
+    //   wx.request({
+    //     url: that.globalData.httpsUrl + '/chatparentlist',
+    //     method: 'POST',
+    //     header: { 'content-type': 'application/x-www-form-urlencoded' },
+    //     data: {
+    //       'user_id': userId,
+    //     },
+    //     success: function (res) {
+    //       that.globalData.chatParentList = res.data
+    //       // console.log(res.data)
+    //     }
+    //   })
+    // }
 
     // 获取值
     if (that.globalData.userId) {
       work();
       group();
-      chatParentList(); 
+      // chatParentList(); 
       message();
-       notices();
+      // notices();
       timer();
 
        // 由于  wx.request 是网络请求，可能会在 Page.onLoad 之后才返回
@@ -333,12 +356,11 @@ App({
          }
     }else{
      that.userInfoReadyCallback = res => {
-      
         work();
         group();
         message();
-        chatParentList(); 
-        notices();
+        // chatParentList(); 
+        // notices();
         timer();
         // 由于  wx.request 是网络请求，可能会在 Page.onLoad 之后才返回
          // 所以此处加入 callback 以防止这种情况
@@ -353,11 +375,11 @@ App({
           work();
           group();
           message();
-          notices();
-          chatParentList();
+          // notices();
+          // chatParentList();
           // 调用自己
           timer();
-      },3000)
+      },1000)
     }
 
     

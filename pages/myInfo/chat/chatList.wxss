@@ -1,10 +1,32 @@
 /* pages/myInfo/chat/chatList.wxss */
-.i-index-demo, page{
-    width:100%;
-    height:100%;
+.panel{
+  height: 100vh;
+  width: 100vw;
+  background-color: #f5f5f5;
 }
-.i-index-demo-item{
-    padding:10px;
-    border-bottom:#ddd solid 1rpx;
-    font-size:14px;
+
+.panel .line{
+  position: relative;
+  float: left;
+  background-color: #f5f5f5;
+  width: 100vw;
+  height: 4vw;
+}
+
+.panel .item{
+  position: relative;
+  float: left;
+  background-color: white;
+  border-bottom: 1px solid #f5f5f5;
+  width: 100vw;
+  height: 13vw;
+  font-size: 4vw;
+  font-weight: 500;
+  line-height: 13vw;
+  color: black;
+  padding-left: 4vw;
+}
+
+.panel .border{
+  border-top: 1vw solid #f5f5f5;
 }

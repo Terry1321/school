@@ -78,7 +78,7 @@ Page({
         that.setData({
           studentList: res.data,
         })
-        
+        console.log(that.data.studentList)
         // var studentList=that.data.studentList
         // let studentListActive = []
         // for (var i = 0; i < studentList.length; i++){
@@ -133,6 +133,7 @@ Page({
 
   },
 
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -161,6 +162,7 @@ Page({
     wx.setNavigationBarTitle({
       title: teacherName
     })
+
     if (that.data.isTeacher == true) {
       that.queryStudentList(num)
       that.queryStarIndex(num)
@@ -168,6 +170,7 @@ Page({
     else{
       that.queryStarIndex(num)
     }
+    // console.log(that.data.studentList)
   },
 
   /**

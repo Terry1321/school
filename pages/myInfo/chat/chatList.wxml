@@ -1,21 +1,13 @@
 <!--pages/myInfo/chat/chatList.wxml-->
 
-<view class="i-index-demo">
-    <i-index height="100%" bind:change="onChange">
-        <i-index-item
-            wx:for="{{ cities }}" 
-            wx:for-index="index" 
-            wx:key="{{index}}" 
-            wx:for-item="item" name="{{item.key}}">
-            <view  data-name='{{it.name}}' bindtap="toChatWindow"
-                class="i-index-demo-item" 
-                wx:for="{{item.list}}" 
-                wx:for-index="in" 
-                wx:key="{{in}}" 
-                wx:for-item="it">
-                {{it.name}}
-            </view>
-        </i-index-item>
-        
-    </i-index>
-</view>
+<scroll-view class="panel" scroll-y="true" scroll-with-animation="" enable-back-to-top="true">
+  <view class='border'></view>
+  <block wx:for="{{parentList}}" wx:key="">
+    <block wx:if="{{ index % 3 == 0}}">
+      <view class='line'></view>
+  </block>
+      <view class='item'>
+        {{item.name}}
+      </view>
+    </block>
+</scroll-view>

@@ -6,7 +6,15 @@
     width: 100vw;
     background-color: #ebebeb;
 }
+.noticeDetail .item .content .title{
+    margin-bottom: 2vw;
+    text-align: center;
+    font-weight: 600;
+}
 
+.noticeDetail .item .content .red{
+    color: red;
+}
 .noticeDetail .item {
     top: 5vw;
     position: relative;

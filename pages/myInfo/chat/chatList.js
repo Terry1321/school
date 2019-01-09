@@ -61,59 +61,37 @@ Page({
     cities = []
     let self = this
     //get classId
-    let num = JSON.parse(options.current)
+    let data = JSON.parse(options.current)
     let classList = self.data.classList
-    let title = ''
-    for (let i = 0, len = classList.length; i < len; i++)
-      if (classList[i]['classId'] == num) {
-        title = classList[i]['className']
-        break
-      }
-    let parentPinyin = app.globalData.chatParentPinyin[num]
-
-    for (var key in parentPinyin) {
-      cities.push({ 'name': key, 'pinyin': parentPinyin[key] })
-    }
     self.setData({
-      className: title,
-      classId: num
+      classId: data.num,
     })
+      wx.request({
+        url: app.globalData.httpsUrl + '/chatparentlist',
+        method: 'POST',
+        header: { 'content-type': 'application/x-www-form-urlencoded' },
+        data: {
+          'group_id': self.data.classId,
+        },
+        success: function (res) {
+          self.setData({
+            parentList:res.data
+          })
+        }
+      })
     wx.setNavigationBarTitle({
-      title: title
+      title: data.name
     })
 
+    console.log(self.data.parentList)
+    console.log(data.num)
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    let self = this
-    let storeCity = new Array(26);
-    let words = []
-    for (let i = 0, len = cities.length; i < len; i++)
-      words.push(cities[i]['pinyin'][0])
-    words = self.uniq(words)
-    words = words.sort()
-    // const words = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-    words.forEach((item, index) => {
-      storeCity[index] = {
-        key: item,
-        list: []
-      }
-    })
-    cities.forEach((item) => {
-      let firstName = item.pinyin.substring(0, 1);
-      let index = words.indexOf(firstName);
-      storeCity[index].list.push({
-        name: item.name,
-        key: firstName
-      });
-    })
-    this.data.cities = storeCity;
-    this.setData({
-      cities: this.data.cities
-    })
+
   },
 
   /**

@@ -40,10 +40,10 @@ Page({
     animationData2: {},
     animationData3: {},
     //red point
-    title_1: true,
+    title_1: false,
     title_2: false,
-    title_3: true,
-    join_class: true,
+    title_3: false,
+    join_class: false,
   },
 
 // 获取授权
@@ -58,9 +58,12 @@ Page({
   listenSwiper(e) {
     var that = this
     let num = e.detail.current
-    if (num == 0) that.setData({ title_1: false })
-    else if (num == 1) that.setData({ title_2: false })
-    else if (num == 2) that.setData({ title_3: false })
+    // if (num == 0) that.setData({ title_1: false })
+    // else if (num == 1) that.setData({ title_2: false })
+    // else if (num == 2) that.setData({ title_3: false })
+    if (num == 0) app.globalData.title_1 = false
+    else if (num == 1) app.globalData.title_2 = false
+    else if (num == 2) app.globalData.title_3 = false
     that.setData({
       _this: e.detail.current
     })
@@ -69,9 +72,9 @@ Page({
   changepages: function (e) {
     let that = this
     let num = e.target.dataset.num
-    if (num == 0) that.setData({ title_1: false })
-    else if (num == 1) that.setData({ title_2: false })
-    else if (num == 2) that.setData({ title_3: false })
+    if (num == 0) app.globalData.title_1 = false
+    else if (num == 1) app.globalData.title_2 = false
+    else if (num == 2) app.globalData.title_3 = false
     that.setData({
       _this: e.target.dataset.num,
       swiperCurrent: e.target.dataset.num
@@ -203,6 +206,7 @@ Page({
     }
     //main
     that.setData({
+      isTeacher: app.globalData.isTeacher,
       current: detail.key
     })
   },
@@ -263,8 +267,13 @@ Page({
   },
 
   toChatList(e) {
+    let that = this
+    let data = {
+      num: e.target.dataset.num,
+      name: e.target.dataset.name,
+    }
     wx.navigateTo({
-      url: "../myInfo/chat/chatList?current=" + JSON.stringify(e.target.dataset.num)
+      url: "../myInfo/chat/chatList?current=" + JSON.stringify(data)
     })
   },
 
@@ -375,13 +384,17 @@ Page({
         that.setData({
           username:app.globalData.username,
           //index summary
-          workSummaryList: app.globalData.workSummaryList.reverse(),
-          messageSummaryList: app.globalData.messageSummaryList.reverse(),
-          noticeSummaryList: app.globalData.noticeSummaryList.reverse(),
+          workSummaryList: app.globalData.workSummaryList,
+          messageSummaryList: app.globalData.messageSummaryList,
+          noticeSummaryList: app.globalData.noticeSummaryList,
           classItemList: app.globalData.chatClassList,
+          title_1: app.globalData.title_1,
+          title_2: app.globalData.title_2,
+          title_3: app.globalData.title_3,
+          join_class: app.globalData.join_class,
         })
         that.timer();
-    },3000);
+    },1000);
   },
   /**
    * 生命周期函数--监听页面加载

@@ -4,7 +4,13 @@
     <view class="item" hover-class="none" hover-stop-propagation="false">
         <view class="time" hover-class="none" hover-stop-propagation="false">{{noticeList.time}}</view>
         <view class="content" hover-class="none" hover-stop-propagation="false">
-            <text>{{noticeList.text}}</text>
+            <block wx:if="{{noticeList.red != 0}}">
+                <view class="title red">全校通知</view>
+                <text class="red">{{noticeList.text}}</text>
+            </block>
+            <block wx:else>
+                <text>{{noticeList.text}}</text>
+            </block>
         </view>
     </view>
 </block>
